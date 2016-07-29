@@ -1,4 +1,5 @@
 <?php
+require(__DIR__ . '/../vendor/autoload.php');
 
 /**
  * Created by PhpStorm.
@@ -6,27 +7,42 @@
  * Date: 2016/7/28
  * Time: 11:42
  */
-class Service
+class Service extends ActiveRecord
 {
+    public $table = 'user';
+    public $primaryKey = 'id';
+    public static $dbs = null;
 
-    public function HelloWorld()
+    /**
+     *
+     */
+    public static function connect()
     {
-        return "Hello";
+        $dbms = 'mysql';
+        $host = '10.1.20.84';
+        //数据库主机名
+        $dbName = 'soap';
+        //使用的数据库
+        $user = 'bruce';
+        //数据库连接用户名
+        $pass = '123456';
+        //对应的密码
+        $dsn = "$dbms:host=$host; dbname=$dbName";
+        try {
+            if (!self::$dbs) {
+                self::$dbs = new PDO($dsn, $user, $pass);
+            }
+            return self::$dbs;
+        } catch (PDOException $e) {
+            die('error' . $e->getMessage());
+        }
     }
 
-    public function Add($a, $b)
+    public function updatepassword($id, $newpass)
     {
-        return $a + $b;
-    }
-
-    public function stu($id)
-    {
-        sleep(10);
-        return 'name' . $id;
-    }
-
-    public function tea($id)
-    {
-        return 'name----' . $id;
+        ActiveRecord::$db = self::connect();
+        $user = $this->find($id);
+        $user->password = md5($newpass);
+        return $user->update() ? 0 : 1;
     }
 }

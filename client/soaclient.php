@@ -5,6 +5,6 @@
  * Date: 2016/7/28
  * Time: 11:42
  */
-ini_set('soap.wsdl_cache_enable', '0');
+//ini_set('soap.wsdl_cache_enable', '0');
 $soap = new SoapClient('http://my-pc/soapserver/StuService.php?WSDL');
-echo $soap->__soapCall('tea', array(1001)) . "\n";
+echo $soap->__soapCall('updatepassword', array(0,'11223')) . "\n";
