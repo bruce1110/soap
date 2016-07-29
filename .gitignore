@@ -1,0 +1,4 @@
+.idea/*
+wsdl/*
+vender/*
+composer.lock
