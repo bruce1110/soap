@@ -1,4 +1,4 @@
 .idea/*
 wsdl/*
-vender/*
+vendor/*
 composer.lock
